@@ -1,0 +1,12 @@
+ForwardAgent yes
+
+Host *
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    ServerAliveInterval 60
+
+Host review.openstack.org
+    IdentityFile ~/.ssh/openstack_id_rsa
+
+Host github.com
+    IdentityFile ~/.ssh/github_id_rsa

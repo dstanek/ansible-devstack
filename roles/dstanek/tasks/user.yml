@@ -1,0 +1,15 @@
+---
+- name: add my user account
+  user: name=dstanek
+        comment="David Stanek"
+        groups={{ sudo_group }}
+        shell=/bin/zsh
+- name: add my ssh key
+  sudo: yes
+  authorized_key: user=dstanek
+                  key="{{ lookup('file', '/Users/dstanek/.ssh/rax_id_rsa.pub')}}"
+- name: add my github private key
+  copy: src=/Users/dstanek/.ssh/github_id_rsa dest=/home/dstanek/.ssh/github_id_rsa
+        owner=dstanek group=dstanek mode=0600
+- name: add me to sudoers
+  lineinfile: "dest=/etc/sudoers line='dstanek ALL=(ALL) NOPASSWD: ALL'"

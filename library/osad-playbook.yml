@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+    local_user: dstanek
+    local_group: dstanek
+  roles:
+    - dstanek
+    - os-ansible-deploy

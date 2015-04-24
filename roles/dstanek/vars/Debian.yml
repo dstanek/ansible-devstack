@@ -1,0 +1,14 @@
+---
+packager: apt
+packages:
+  - zsh
+  - git
+  - curl
+  - tmux
+  - vim-nox
+  - python-dev
+#  - python-tox
+  - python-virtualenv
+  - tig
+  - tree
+sudo_group: sudo

@@ -1,0 +1,91 @@
+---
+
+- name: SSH get Github host key
+  shell: ssh-keyscan github.com
+  register: github_host_key
+  changed_when: False
+
+- name: SSH add Github host key to known_hosts
+  sudo: yes
+  sudo_user: dstanek
+  lineinfile:
+    create: yes
+    dest: /home/dstanek/.ssh/known_hosts
+    line: '{{ github_host_key.stdout }}'
+    state: present
+
+- name: clone oh-my-zsh repo
+  sudo: yes
+  sudo_user: dstanek
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: /home/dstanek/.oh-my-zsh
+
+- name: install ssh config
+  sudo: yes
+  copy:
+    src: ssh_config
+    dest: home/dstanek/.ssh/config
+    owner: dstanek
+    group: dstanek
+    mode: 0600
+
+- name: clone vim configs
+  sudo: yes
+  sudo_user: dstanek
+  git:
+    repo: git@github.com:dstanek/dotvim.git
+    dest: home/dstanek/Projects/dotvim
+
+- name: create vim config symlinks
+  sudo: yes
+  sudo_user: dstanek
+  file:
+    dest: 'home/dstanek/.{{ item }}'
+    src: '/home/dstanek/Projects/dotvim/{{ item }}'
+    state: link
+    owner: dstanek
+  with_items:
+    - vimrc
+    - gvimrc
+
+- name: create vim directory symlink
+  sudo: yes
+  sudo_user: dstanek
+  file: dest=/home/dstanek/.vim
+        src=/home/dstanek/Projects/dotvim
+        state=link
+        owner=dstanek
+
+- name: Vundle - install
+  sudo: yes
+  sudo_user: dstanek
+  git:
+    repo: git@github.com:gmarik/Vundle.vim.git
+    dest: /home/dstanek/.vim/bundle/vundle
+- name: Vundle - install plugins
+  shell: vim +PluginInstall +qall
+
+- name: clone dotfiles
+  sudo: yes
+  sudo_user: dstanek
+  git:
+    repo: git@github.com:dstanek/dotfiles.git
+    dest: home/dstanek/Projects/dotfiles
+
+- name: create dotfile symlinks
+  sudo: yes
+  sudo_user: dstanek
+  file:
+    dest: '/home/dstanek/{{ item }}'
+    src: '/home/dstanek/Projects/dotfiles/{{ item }}'
+    state: link
+    owner: dstanek
+  with_items:
+    - .zshrc
+    - .zsh.custom
+    - .shell
+    - .tmux.conf
+    - bin
+    - .gitconfig
+    - .global_gitignore

@@ -1,0 +1,18 @@
+- name: clone github
+  sudo: yes
+  sudo_user: dstanek
+  git: repo=git://github.com/openstack-dev/devstack.git
+       dest=/home/dstanek/devstack
+
+- name: local.conf
+  sudo: yes
+  sudo_user: dstanek
+  copy: src=local.conf
+        dest=/home/dstanek/devstack/local.conf
+        owner=dstanek group=dstanek mode=0600
+
+- include_vars: "{{ ansible_os_family }}.yml"
+- name: install system dependencies
+  action: "{{ packager}} pkg={{ item }} state=latest"
+  sudo: yes
+  with_items: "{{ packages}}"

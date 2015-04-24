@@ -1,0 +1,13 @@
+---
+packager: yum
+packages:
+  - zsh
+  - git
+  - curl
+  - tmux
+  - vim-enhanced
+  - python-devel
+  - python-tox
+  - python-virtualenv
+  - tig
+sudo_group: wheel

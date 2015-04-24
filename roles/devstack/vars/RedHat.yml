@@ -1,0 +1,6 @@
+---
+packager: yum
+packages:
+  - gettext
+  - libsqlite3x-devel
+  - mariadb-devel

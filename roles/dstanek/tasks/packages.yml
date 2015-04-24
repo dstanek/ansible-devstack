@@ -1,0 +1,9 @@
+---
+- name: update package repositories
+  action: "{{ packager }} update_cache=yes"
+  sudo: yes
+ 
+- name: install my favorite softwares
+  action: "{{ packager }} pkg={{ item }} state=latest"
+  sudo: yes
+  with_items: "{{ packages }}"

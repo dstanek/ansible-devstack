@@ -1,0 +1,4 @@
+---
+- name: add my OpenStack private key
+  copy: src=/Users/dstanek/.ssh/openstack_id_rsa dest=/home/dstanek/.ssh/openstack_id_rsa
+        owner=dstanek group=dstanek mode=0600

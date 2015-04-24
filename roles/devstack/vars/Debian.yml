@@ -1,0 +1,7 @@
+---
+packager: apt
+packages:
+  - gettext
+  - libsqlite3-dev
+  - libmysqlclient-dev
+  - git-review
